@@ -1,25 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Follower : MonoBehaviour
 {
-    public GameObject targetObject;
-    private Vector3 distance;
-    private Vector3 targetPosition;
+    public Transform target;
+    public float distance = 5f;
+    public float height = 2f;
+    public float rotationSpeed = 5f;
+    public float rotationMultiplier = 0.1f;
 
-    private void Start()
-    {
-        distance= new Vector3(0,-5f,5f);
-    }
-    private void Update()
-    {
-        targetPosition = targetObject.transform.position - distance;
+    public float cameraAngel = 30f;
 
-    }
-    private void FixedUpdate()
+    void LateUpdate()
     {
-        this.transform.position = targetPosition;
+        if (target != null)
+        {
+            // Create the camera's target rotation with the character's rotation
+            Quaternion targetRotation = Quaternion.Euler(cameraAngel+target.eulerAngles.x,target.eulerAngles.y, 0f);
 
+            //Calculate the camera's target position from the character's position and the set distance
+            Vector3 targetPosition = target.position - targetRotation * Vector3.forward * distance;
+            targetPosition.y = target.position.y + height;
+
+            // Update camera rotation gently
+            //transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            //transform.position = Vector3.Lerp(transform.position, targetPosition, rotationSpeed * Time.deltaTime);
+
+            //High Performance//
+
+            transform.position = targetPosition;
+            transform.rotation = targetRotation;
+        }
     }
 }
