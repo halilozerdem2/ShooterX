@@ -1,21 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float lifeTime = 3f;
-    private void Awake()
-    {
-        Destroy(gameObject,lifeTime);
-    }
+    public float bulletLifeTime = 3f;
 
+    private void OnEnable()
+    {
+        StartCoroutine(DeactivateAfterLifetime());
+    }
+    private IEnumerator DeactivateAfterLifetime()
+    {
+        yield return new WaitForSeconds(bulletLifeTime);
+        gameObject.SetActive(false);
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Obstacle"))
         {
             Destroy(collision.gameObject);
-            Destroy(gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 }

@@ -1,13 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems; // For handling pointer events
+using System.Collections;
 
 public class ButtonHandler : MonoBehaviour
 {
     [SerializeField] private Camera thirdPersonCam;
     [SerializeField] private Camera firstPersonCam;
     [SerializeField] private Gun gun;
-
+    public float fireRate = 0.1f;  // Time between shots in seconds
+    private bool isShooting = false;
 
     public void SwitchCamera()
     {
@@ -15,9 +16,26 @@ public class ButtonHandler : MonoBehaviour
         thirdPersonCam.gameObject.SetActive(!thirdPersonCam.gameObject.activeSelf);
     }
 
-    public void Fire()
+    public void StartShooting()
     {
-        gun.Fire();
+        if (!isShooting && gun != null) // Added null check for gun
+        {
+            isShooting = true;
+            StartCoroutine(ShootContinuously());
+        }
     }
 
+    public void StopShooting()
+    {
+        isShooting = false;
+    }
+
+    private IEnumerator ShootContinuously()
+    {
+        while (isShooting)
+        {
+            gun.Shoot();
+            yield return new WaitForSeconds(fireRate);
+        }
+    }
 }
