@@ -169,8 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thirdPersonCam: {fileID: 963194227}
   firstPersonCam: {fileID: 681002087}
-  gun: {fileID: 2047347123}
-  fireRate: 0.1
+  gun: {fileID: 2047347121}
 --- !u!1 &196971533
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,8 +214,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a10809d10036766488a7c47ca993a205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pooledBulletObjects: []
-  objectTooPool: {fileID: 4757265259095981922, guid: 103c5ce0a4acacc4dabaad202f09ee0f, type: 3}
+  pooledDefaultBullets: []
+  pooledM4A1Bullets: []
+  M4A1Bullet: {fileID: 4757265259095981922, guid: 103c5ce0a4acacc4dabaad202f09ee0f, type: 3}
+  defaultBullet: {fileID: 4757265259095981922, guid: c245c11e031939e49b0b4394d02df4b9, type: 3}
   amountToPool: 20
 --- !u!1 &314979954
 GameObject:
@@ -2620,30 +2621,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!1 &2047347119 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8660757509431299335, guid: 3dd337a9a30eaea4b800d1d1b45d36d4, type: 3}
+--- !u!114 &2047347121 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8967057219608074266, guid: 3dd337a9a30eaea4b800d1d1b45d36d4, type: 3}
   m_PrefabInstance: {fileID: 3114976017918459887}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2047347123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2047347119}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98a7e7f954e7227469ee784c984de1b7, type: 3}
+  m_Script: {fileID: 11500000, guid: aa0f4943a094caa47bba73900e54e375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpawnPoint: {fileID: 375209473}
-  crosshair: {fileID: 319675436}
-  targetPosition: {x: 0, y: 0, z: 0}
-  bulletPrefab: {fileID: 4757265259095981922, guid: 103c5ce0a4acacc4dabaad202f09ee0f, type: 3}
-  fpCamera: {fileID: 681002087}
-  tpCamera: {fileID: 963194227}
-  bulletSpeed: 90
 --- !u!1001 &3114976017918459887
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2760,12 +2748,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -2.287
       objectReference: {fileID: 0}
+    - target: {fileID: 8967057219608074266, guid: 3dd337a9a30eaea4b800d1d1b45d36d4, type: 3}
+      propertyPath: fpCamera
+      value: 
+      objectReference: {fileID: 681002087}
+    - target: {fileID: 8967057219608074266, guid: 3dd337a9a30eaea4b800d1d1b45d36d4, type: 3}
+      propertyPath: tpCamera
+      value: 
+      objectReference: {fileID: 963194227}
+    - target: {fileID: 8967057219608074266, guid: 3dd337a9a30eaea4b800d1d1b45d36d4, type: 3}
+      propertyPath: crosshair
+      value: 
+      objectReference: {fileID: 319675436}
+    - target: {fileID: 8967057219608074266, guid: 3dd337a9a30eaea4b800d1d1b45d36d4, type: 3}
+      propertyPath: BulletType
+      value: 
+      objectReference: {fileID: 4757265259095981922, guid: 103c5ce0a4acacc4dabaad202f09ee0f, type: 3}
+    - target: {fileID: 8967057219608074266, guid: 3dd337a9a30eaea4b800d1d1b45d36d4, type: 3}
+      propertyPath: BulletSpawnPoint
+      value: 
+      objectReference: {fileID: 375209473}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3114976017117170331, guid: 3dd337a9a30eaea4b800d1d1b45d36d4, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8660757509431299335, guid: 3dd337a9a30eaea4b800d1d1b45d36d4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2047347123}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3dd337a9a30eaea4b800d1d1b45d36d4, type: 3}

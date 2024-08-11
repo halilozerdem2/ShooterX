@@ -6,8 +6,8 @@ public class ButtonHandler : MonoBehaviour
 {
     [SerializeField] private Camera thirdPersonCam;
     [SerializeField] private Camera firstPersonCam;
-    [SerializeField] private Gun gun;
-    public float fireRate = 0.1f;  // Time between shots in seconds
+    [SerializeField] private M4A1 gun;
+
     private bool isShooting = false;
 
     public void SwitchCamera()
@@ -35,7 +35,7 @@ public class ButtonHandler : MonoBehaviour
         while (isShooting)
         {
             gun.Shoot();
-            yield return new WaitForSeconds(fireRate);
+            yield return new WaitForSeconds(gun.fireRate);
         }
     }
 }
