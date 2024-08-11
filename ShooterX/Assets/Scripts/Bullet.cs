@@ -18,10 +18,6 @@ public class Bullet : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Obstacle"))
-        {
-            Destroy(collision.gameObject);
-            this.gameObject.SetActive(false);
-        }
+        this.gameObject.SetActive(false);
     }
 }

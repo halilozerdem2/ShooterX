@@ -1,8 +1,9 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public abstract class Weapon: MonoBehaviour
+public abstract class Weapon : MonoBehaviour
 {
     public Camera fpCamera, tpCamera;
     public Transform crosshair, BulletSpawnPoint;
@@ -13,7 +14,10 @@ public abstract class Weapon: MonoBehaviour
 
     public int damage { get; set; }
     public int ammoCapacity { get; set; }
+    public int spareAmmoCapacity { get; set; }
     public int currentAmmo { get; set; }
+    public bool isReloading { get; set; }
+    public bool canShoot { get; set; }
 
     public float bulletSpeed { get; set; }
     public float fireRate { get; set; }
@@ -29,8 +33,8 @@ public abstract class Weapon: MonoBehaviour
         else
             return tpCamera;
     }
-    
-    public virtual Vector3 Aim() 
+
+    public virtual Vector3 Aim()
     {
         Ray ray = SelectActiveCamera().ScreenPointToRay(crosshair.transform.position);
         if (Physics.Raycast(ray, out RaycastHit hit))
@@ -44,34 +48,57 @@ public abstract class Weapon: MonoBehaviour
     }
     public virtual void Shoot()
     {
-        GameObject tmpBullet = GetPooledBullet();
-
-        if (tmpBullet != null)
+        if (currentAmmo <= 0)
+            Reload();
+        else
         {
-            tmpBullet.transform.position = BulletSpawnPoint.position;
-            tmpBullet.transform.rotation = BulletSpawnPoint.rotation;
-            tmpBullet.SetActive(true);
-            
-            Rigidbody tmpRb = tmpBullet.GetComponent<Rigidbody>();
-            Vector3 direction = (targetPosition - BulletSpawnPoint.position).normalized;
-            tmpRb.velocity = direction * bulletSpeed;
-            currentAmmo--;
+            if (!isReloading )
+            {
+                GameObject tmpBullet = GetPooledBullet();
 
-            //if(currentAmmo<=0)
-               // Reload();
-            
+                if (tmpBullet != null)
+                {
+                    tmpBullet.transform.position = BulletSpawnPoint.position;
+                    tmpBullet.transform.rotation = BulletSpawnPoint.rotation;
+                    tmpBullet.SetActive(true);
+
+                    Rigidbody tmpRb = tmpBullet.GetComponent<Rigidbody>();
+                    Vector3 direction = (targetPosition - BulletSpawnPoint.position).normalized;
+                    tmpRb.velocity = direction * bulletSpeed;
+                    currentAmmo--;
+
+                }
+            }
 
         }
     }
-    //public abstract void Reload();
+    public virtual void Reload()
+    {
+        if (spareAmmoCapacity != 0 && !isReloading)
+        {
+            isReloading = true;
+            StartCoroutine(Reloading());
+        }      
+    }
+
+    public IEnumerator Reloading()
+    {
+        yield return new WaitForSeconds(reloadTime);
+        spareAmmoCapacity -= ammoCapacity;
+        currentAmmo = ammoCapacity;
+        isReloading = false;
+    }
 
     protected virtual GameObject GetPooledBullet()
     {
         return ObjectPool.SharedInstance.GetDefaultBullets();
     }
-    
 
-    protected virtual void Onhit() { }
+
+    protected virtual void Onhit()
+    {
+        //this.gameObject.SetActive(false);
+    }
     private void Update()
     {
         Aim();
