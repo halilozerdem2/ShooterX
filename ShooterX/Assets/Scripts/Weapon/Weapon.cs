@@ -44,7 +44,6 @@ public abstract class Weapon: MonoBehaviour
     }
     public virtual void Shoot()
     {
-        Aim();
         GameObject tmpBullet = GetPooledBullet();
 
         if (tmpBullet != null)
@@ -58,13 +57,13 @@ public abstract class Weapon: MonoBehaviour
             tmpRb.velocity = direction * bulletSpeed;
             currentAmmo--;
 
-            if(currentAmmo<=0)
-                Reload();
+            //if(currentAmmo<=0)
+               // Reload();
             
 
         }
     }
-    public abstract void Reload();
+    //public abstract void Reload();
 
     protected virtual GameObject GetPooledBullet()
     {
@@ -73,5 +72,9 @@ public abstract class Weapon: MonoBehaviour
     
 
     protected virtual void Onhit() { }
-   
+    private void Update()
+    {
+        Aim();
+    }
+
 }

@@ -8,8 +8,10 @@ public class ObjectPool : MonoBehaviour
     
     [SerializeField] private List<GameObject> pooledDefaultBullets;
     [SerializeField] private List<GameObject> pooledM4A1Bullets;
+    
     [SerializeField] private GameObject M4A1Bullet;
     [SerializeField] private GameObject defaultBullet;
+   
     [SerializeField] private int amountToPool;
 
     private void Awake()
@@ -44,7 +46,7 @@ public class ObjectPool : MonoBehaviour
 
     }
 
-    public GameObject GetDefaultBullets()
+    public GameObject GetPooledM4A1Bullet()
     {
         for (int i = 0; i < amountToPool; i++)
         {
@@ -55,7 +57,7 @@ public class ObjectPool : MonoBehaviour
         }
         return null;
     }
-    public GameObject GetPooledM4A1Bullet()
+    public GameObject GetDefaultBullets()
     {
         for (int i = 0; i < amountToPool; i++)
         {
