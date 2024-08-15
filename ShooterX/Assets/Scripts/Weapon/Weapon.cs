@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using TMPro;
 using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
@@ -9,6 +7,7 @@ public abstract class Weapon : MonoBehaviour
     public Transform crosshair, BulletSpawnPoint;
     public GameObject BulletType;
     public Vector3 targetPosition;
+    public Animator characterAnim;
 
     public string name { get; set; }
 
@@ -17,6 +16,7 @@ public abstract class Weapon : MonoBehaviour
     public int spareAmmoCapacity { get; set; }
     public int currentAmmo { get; set; }
     public bool isReloading { get; set; }
+    public bool isShooting { get; set; }
     public bool canShoot { get; set; }
 
     public float bulletSpeed { get; set; }
@@ -36,6 +36,9 @@ public abstract class Weapon : MonoBehaviour
 
     public virtual Vector3 Aim()
     {
+        if (currentAmmo <= 0)
+            Reload();
+
         Ray ray = SelectActiveCamera().ScreenPointToRay(crosshair.transform.position);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
@@ -48,28 +51,20 @@ public abstract class Weapon : MonoBehaviour
     }
     public virtual void Shoot()
     {
-        if (currentAmmo <= 0)
-            Reload();
-        else
+        if (!isReloading)
         {
-            if (!isReloading )
+            GameObject tmpBullet = GetPooledBullet();
+            if (tmpBullet != null)
             {
-                GameObject tmpBullet = GetPooledBullet();
+                tmpBullet.transform.position = BulletSpawnPoint.position;
+                tmpBullet.transform.rotation = BulletSpawnPoint.rotation;
+                tmpBullet.SetActive(true);
 
-                if (tmpBullet != null)
-                {
-                    tmpBullet.transform.position = BulletSpawnPoint.position;
-                    tmpBullet.transform.rotation = BulletSpawnPoint.rotation;
-                    tmpBullet.SetActive(true);
-
-                    Rigidbody tmpRb = tmpBullet.GetComponent<Rigidbody>();
-                    Vector3 direction = (targetPosition - BulletSpawnPoint.position).normalized;
-                    tmpRb.velocity = direction * bulletSpeed;
-                    currentAmmo--;
-
-                }
+                Rigidbody tmpRb = tmpBullet.GetComponent<Rigidbody>();
+                Vector3 direction = (targetPosition - BulletSpawnPoint.position).normalized;
+                tmpRb.velocity = direction * bulletSpeed;
+                currentAmmo--;
             }
-
         }
     }
     public virtual void Reload()
@@ -78,7 +73,7 @@ public abstract class Weapon : MonoBehaviour
         {
             isReloading = true;
             StartCoroutine(Reloading());
-        }      
+        }
     }
 
     public IEnumerator Reloading()

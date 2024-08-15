@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems; // For handling pointer events
 using System.Collections;
 
 public class ButtonHandler : MonoBehaviour

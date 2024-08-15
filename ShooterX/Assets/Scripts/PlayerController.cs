@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] FixedJoystick joystick;
     [SerializeField] Rigidbody playerRb;
 
+    [SerializeField] Animator anim;
     [SerializeField] float playerMovingSpeed = 10f;
     [SerializeField] float playerRotationSensitivity = 2f;
     [SerializeField] float rotationMultiplier = 0.1f;
@@ -26,6 +27,10 @@ public class PlayerController : MonoBehaviour
         Vector3 worldMovement = transform.TransformDirection(movement);
 
         playerRb.MovePosition(transform.position + worldMovement);
+
+        bool isMoving = horizontalInput != 0f || verticalInput != 0f;
+        anim.SetFloat("vInput", verticalInput);
+        anim.SetFloat("hInput", horizontalInput);
     }
 
     private void SetRotation()
