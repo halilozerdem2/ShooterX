@@ -6,7 +6,7 @@ public class ButtonHandler : MonoBehaviour
     [SerializeField] private Camera thirdPersonCam;
     [SerializeField] private Camera firstPersonCam;
     [SerializeField] private M4A1 gun;
-    [SerializeField] private PlayerController player;
+    [SerializeField] private MovingStateManager player;
 
     private bool isShooting = false;
 
@@ -24,14 +24,6 @@ public class ButtonHandler : MonoBehaviour
             StartCoroutine(ShootContinuously());
         }
     }
-    public void Jump()
-    {
-        player.Jump();
-    }
-    public void StopShooting()
-    {
-        isShooting = false;
-    }
 
     private IEnumerator ShootContinuously()
     {
@@ -42,20 +34,22 @@ public class ButtonHandler : MonoBehaviour
         }
     }
 
-    public void Run()
+    public void StopShooting()
     {
-        if (!player.isRunning)
-            player.Run();
-        else
-           player.StopRunning();
-
+        isShooting = false;
     }
 
     public void Crouch()
     {
-        if (!player.isCrouching)
-            player.Crouch();
-        else
-            player.GetUp();
+        player.isCrouching = !player.isCrouching;
     }
+    public void Run()
+    {
+        player.isRunning=!player.isRunning;
+    }
+    public void Jump()
+    {
+
+    }
+
 }

@@ -48,11 +48,13 @@ public abstract class Weapon : MonoBehaviour
 
                 Rigidbody tmpRb = tmpBullet.GetComponent<Rigidbody>();
                 Vector3 direction = (targetPosition - BulletSpawnPoint.position).normalized;
-                tmpRb.velocity = direction* bulletSpeed;
-                
+                tmpRb.velocity = direction * bulletSpeed;
+
                 currentAmmo--;
             }
         }
+        else
+            isShooting = false;
     }
     public virtual Vector3 Aim()
     {
