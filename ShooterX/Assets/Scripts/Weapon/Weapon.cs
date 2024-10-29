@@ -1,9 +1,11 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public abstract class Weapon : MonoBehaviour
 {
-    public Camera fpCamera, tpCamera;
+    public Camera fpCamera, tpCamera, activeCamera;
     public Transform crosshair, BulletSpawnPoint;
     public GameObject BulletType;
     public Vector3 targetPosition;
@@ -23,19 +25,29 @@ public abstract class Weapon : MonoBehaviour
     protected float range { get; set; }
     protected float reloadTime { get; set; }
     protected float accuracy { get; set; }
-    
+
+    private void Start()
+    {
+        activeCamera =SelectActiveCamera();
+    }
+    private void Update()
+    {
+        SelectActiveCamera();
+        Aim();
+    }
 
     private protected virtual Camera SelectActiveCamera()
     {
-        if (fpCamera.isActiveAndEnabled)
-            return fpCamera;
+        if (tpCamera.isActiveAndEnabled)
+            activeCamera = tpCamera;
         else
-            return tpCamera;
+           activeCamera= fpCamera;
+
+        return activeCamera;
     }
 
     public virtual void Shoot()
     {
-        Aim();
         if (!isReloading)
         {
             GameObject tmpBullet = GetPooledBullet();
@@ -48,7 +60,7 @@ public abstract class Weapon : MonoBehaviour
 
                 Rigidbody tmpRb = tmpBullet.GetComponent<Rigidbody>();
                 Vector3 direction = (targetPosition - BulletSpawnPoint.position).normalized;
-                tmpRb.velocity = direction * bulletSpeed;
+                tmpRb.linearVelocity = direction * bulletSpeed;
 
                 currentAmmo--;
             }
@@ -56,12 +68,13 @@ public abstract class Weapon : MonoBehaviour
         else
             isShooting = false;
     }
-    public virtual Vector3 Aim()
+    public virtual void Aim()
     {
         if (currentAmmo <= 0)
             Reload();
 
-        Ray ray = SelectActiveCamera().ScreenPointToRay(crosshair.transform.position);
+        Ray ray = activeCamera.ScreenPointToRay(crosshair.transform.position);
+
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             targetPosition = hit.point;
@@ -69,7 +82,6 @@ public abstract class Weapon : MonoBehaviour
         else
             targetPosition = ray.GetPoint(range);
 
-        return targetPosition;
     }
     public virtual void Reload()
     {
@@ -92,5 +104,6 @@ public abstract class Weapon : MonoBehaviour
     {
         return ObjectPool.SharedInstance.GetDefaultBullets();
     }
+
 
 }

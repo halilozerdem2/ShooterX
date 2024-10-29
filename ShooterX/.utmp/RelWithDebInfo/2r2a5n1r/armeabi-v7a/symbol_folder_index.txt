@@ -1,0 +1,1 @@
+C:\Users\Admin\Desktop\Games\ShooterX\ShooterX\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\2r2a5n1r\obj\armeabi-v7a

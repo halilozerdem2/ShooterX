@@ -85,8 +85,6 @@ public class MovingStateManager : MonoBehaviour
         //Move
         playerRb.MovePosition(transform.position + worldMovement);
         isMoving = horizontalInput != 0f || verticalInput != 0f;
-        Debug.Log(currentState);
-        //Debug.Log("Running: " + isRunning + " Crouching: " + isCrouching);
 
         anim.SetFloat("vInput", verticalInput);
         anim.SetFloat("hInput", horizontalInput);
