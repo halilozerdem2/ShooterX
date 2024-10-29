@@ -28,7 +28,7 @@ public abstract class Weapon : MonoBehaviour
 
     private void Start()
     {
-        activeCamera =SelectActiveCamera();
+        activeCamera = SelectActiveCamera();
     }
     private void Update()
     {
@@ -41,7 +41,7 @@ public abstract class Weapon : MonoBehaviour
         if (tpCamera.isActiveAndEnabled)
             activeCamera = tpCamera;
         else
-           activeCamera= fpCamera;
+            activeCamera = fpCamera;
 
         return activeCamera;
     }
@@ -50,6 +50,7 @@ public abstract class Weapon : MonoBehaviour
     {
         if (!isReloading)
         {
+            AudioManager.instance.Play("GunShot");
             GameObject tmpBullet = GetPooledBullet();
             if (tmpBullet != null)
             {
@@ -70,6 +71,7 @@ public abstract class Weapon : MonoBehaviour
     }
     public virtual void Aim()
     {
+
         if (currentAmmo <= 0)
             Reload();
 
@@ -88,7 +90,9 @@ public abstract class Weapon : MonoBehaviour
         if (spareAmmoCapacity != 0 && !isReloading)
         {
             isReloading = true;
+            AudioManager.instance.Play("Reload");
             StartCoroutine(Reloading());
+
         }
     }
 
