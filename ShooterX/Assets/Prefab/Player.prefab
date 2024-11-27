@@ -250,12 +250,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3114976019029480664}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1, y: 1.55, z: 0.25}
+  m_LocalRotation: {x: 0.043634277, y: -0.000000029744513, z: -0.00000004469922, w: 0.9990476}
+  m_LocalPosition: {x: 0, y: 0.5757118, z: 0.2121771}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7087835195211646370}
+  m_Father: {fileID: 3055032181695846053}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &3114976019029480667
 Camera:
@@ -541,12 +541,12 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3076d1e8f8e49f146ba356d349d69f4f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3114976019029480665}
     - targetCorrespondingSourceObject: {fileID: 9209768275548720269, guid: 3076d1e8f8e49f146ba356d349d69f4f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3114976017508514698}
+    - targetCorrespondingSourceObject: {fileID: -3480699329000672020, guid: 3076d1e8f8e49f146ba356d349d69f4f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3114976019029480665}
     - targetCorrespondingSourceObject: {fileID: 6502182839619065283, guid: 3076d1e8f8e49f146ba356d349d69f4f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2112481480193679544}
@@ -558,6 +558,11 @@ PrefabInstance:
 --- !u!4 &1880286382150725316 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9209768275548720269, guid: 3076d1e8f8e49f146ba356d349d69f4f, type: 3}
+  m_PrefabInstance: {fileID: 7338534176924590665}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3055032181695846053 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -3480699329000672020, guid: 3076d1e8f8e49f146ba356d349d69f4f, type: 3}
   m_PrefabInstance: {fileID: 7338534176924590665}
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &3800229231899172824 stripped
